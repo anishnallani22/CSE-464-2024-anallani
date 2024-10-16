@@ -9,21 +9,18 @@ import java.io.IOException;
 
 public class Main {
     public static void main(String[] args) {
-        String inputFilePath = "src/main/resources/input.dot";  // Path to DOT file
-        String outputFilePath = "src/main/resources/output1.png";  // Path for original graph PNG
-        String outputFilePath2 = "src/main/resources/output2.png";  // Path for updated graph PNG
-        String outputFilePath3 = "src/main/resources/output3.png";  // Path for updated graph PNG (Feature 3)
+        String inputFilePath = "src/main/resources/input.dot";
+        String outputFilePath1 = "src/main/resources/output1.png";
+        String outputFilePath2 = "src/main/resources/output2.png";
+        String outputFilePath4 = "src/main/resources/output4.png";
+        String outputDotPath = "src/main/resources/outputGraph.dot";
 
         try {
-
             GraphGenerator graphManager = new GraphGenerator();
             graphManager.parseGraph(inputFilePath);
 
-            System.out.println("Original Graph:");
-            System.out.println(graphManager.toString());
-
-            graphManager.outputGraph(outputFilePath);
-            System.out.println("Graph image generated at: " + outputFilePath);
+            graphManager.outputGraph(outputFilePath1);
+            System.out.println("Original graph image generated at: " + outputFilePath1);
 
             NodeModifier graphFeature2 = new NodeModifier(graphManager.getGraph());
             graphFeature2.addNode("i");
@@ -32,10 +29,8 @@ public class Main {
 
             System.out.println(graphFeature2.printGraph());
 
-
             graphManager.outputGraph(outputFilePath2);
             System.out.println("Updated graph image generated at: " + outputFilePath2);
-
 
             addEdges graphFeature3 = new addEdges(graphManager.getGraph());
             graphFeature3.addEdge("a", "i");
@@ -43,18 +38,21 @@ public class Main {
             graphFeature3.addEdge("c", "k");
             graphFeature3.addEdge("d", "l");
 
-
             System.out.println(graphFeature3.printGraph());
 
+            outputGraph outputFeature4 = new outputGraph(graphManager.getGraph());
+            outputFeature4.outputDOTGraph(outputDotPath);
+            outputFeature4.outputGraphics(outputFilePath4, "png");
 
-            graphManager.outputGraph(outputFilePath3);
-            System.out.println("Updated graph image generated at: " + outputFilePath3);
+            System.out.println("Final graph image generated at: " + outputFilePath4);
+            System.out.println("DOT file generated at: " + outputDotPath);
 
         } catch (IOException e) {
             System.out.println("Error: " + e.getMessage());
         }
     }
 }
+
 
 
 
