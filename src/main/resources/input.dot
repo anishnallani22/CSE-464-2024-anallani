@@ -5,8 +5,8 @@ digraph {
     d -> a;
     a -> e;
     e -> g;
-    f -> d;
+    h -> d;
     f -> h;
-    g -> a;
+    g -> h;
 }
 
