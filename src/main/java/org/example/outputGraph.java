@@ -21,19 +21,21 @@ public class outputGraph {
         try (FileWriter fileWriter = new FileWriter(path);
              PrintWriter printWriter = new PrintWriter(fileWriter)) {
 
+            // Write the DOT representation of the graph without quotes
             printWriter.println("digraph G {");
             graph.edgeSet().forEach(edge -> {
                 String source = graph.getEdgeSource(edge);
                 String target = graph.getEdgeTarget(edge);
-                printWriter.printf("  \"%s\" -> \"%s\";%n", source, target);
+                printWriter.printf("  %s -> %s;%n", source, target);  // No quotes around source and target
             });
             printWriter.println("}");
-            System.out.println("Graph successfully written to DOT file: " + path);
+            System.out.println("Graph successfully written to DOT file without quotes: " + path);
         } catch (IOException e) {
             System.out.println("Error writing DOT file: " + e.getMessage());
             throw e;
         }
     }
+
 
     public void outputGraphics(String path, String format) throws IOException {
         try {
