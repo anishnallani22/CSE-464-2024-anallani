@@ -5,16 +5,16 @@ import org.jgrapht.graph.DefaultDirectedGraph;
 import org.jgrapht.graph.DefaultEdge;
 import java.io.File;
 import java.io.IOException;
+
 public class Main {
     public static void main(String[] args) {
-        // Path to your input DOT file
-        String inputFilePath = "/Users/anishnallani/Documents/CSE464/input.dot";
-        // Path to where the output PNG file should be saved
-        String outputFilePath = "/Users/anishnallani/Documents/CSE464/input.png";
-        String testMessage = "test";
+        // Path to your input DOT file in the resources directory
+        String inputFilePath = "src/main/resources/input.dot";  // Update the path
+        // Path to where the output PNG file should be saved in the resources directory
+        String outputFilePath = "src/main/resources/input.png";  // Update the path
 
         try {
-            // Create an instance of GraphGenerator (GraphManager in this case)
+            // Create an instance of GraphGenerator
             GraphGenerator graphManager = new GraphGenerator();
 
             // Parse the DOT file to create the graph

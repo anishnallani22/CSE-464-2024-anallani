@@ -66,7 +66,7 @@ public class GraphGenerator {
     public void outputGraph(String outputFilePath) throws IOException {
         try {
             // Render the graph that was already parsed, and save it as a PNG image
-            Graphviz.fromGraph(new Parser().read(new File("/Users/anishnallani/Documents/CSE464/input.dot")))
+            Graphviz.fromGraph(new Parser().read(new File("src/main/resources/input.dot")))  // Use the same relative path
                     .width(700)
                     .render(Format.PNG)
                     .toFile(new File(outputFilePath));
