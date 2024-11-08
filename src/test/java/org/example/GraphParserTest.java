@@ -5,6 +5,7 @@ import static org.junit.jupiter.api.Assertions.*;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.io.IOException;
+import java.util.NoSuchElementException;
 
 public class GraphParserTest {
 
@@ -102,5 +103,38 @@ public class GraphParserTest {
 
         assertEquals(expectedOutput.trim(), actualOutput.trim(), "The DOT file output does not match the expected output");
     }
+
+    //Test Feature 5: Remove single node
+    @Test
+    public void testRemoveNode() throws IOException {
+        String inputFilePath = "src/main/resources/input.dot";
+        GraphGenerator graphManager = new GraphGenerator();
+        graphManager.parseGraph(inputFilePath);
+
+        // Add nodes for verification
+        NodeModifier nodeModifier = new NodeModifier(graphManager.getGraph());
+        nodeModifier.addNode("i");
+        String[] newNodes = {"j", "k", "l"};
+        nodeModifier.addNodes(newNodes);
+
+        // Ensure nodes are there to remove
+        assertTrue(graphManager.getGraph().containsVertex("i"), "Node 'i' should exist before removal");
+        assertTrue(graphManager.getGraph().containsVertex("j"), "Node 'j' should exist before removal");
+
+        removeNode nodeRemover = new removeNode(graphManager.getGraph());
+        // Scenario 1:Successfully remove an existing node
+        nodeRemover.removeGraphNode("i");
+        assertFalse(graphManager.getGraph().containsVertex("i"), "Node 'i' was not removed");
+
+        // Scenario 2:Attempt to remove a non-existent node
+        assertThrows(NoSuchElementException.class, () -> {
+            nodeRemover.removeGraphNode("nonexistentNode");
+        }, "Should throw NoSuchElementException");
+    }
+
+    //Test Feature 6: Removing multiple nodes
+
+
+
 }
 
