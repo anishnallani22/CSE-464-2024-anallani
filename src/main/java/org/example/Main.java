@@ -1,12 +1,8 @@
 package org.example;
 
-import guru.nidi.graphviz.model.Node;
-import guru.nidi.graphviz.parse.Parser;
-import guru.nidi.graphviz.model.MutableGraph;
 import org.jgrapht.graph.DefaultDirectedGraph;
 import org.jgrapht.graph.DefaultEdge;
-
-import java.io.File;
+import java.util.NoSuchElementException;
 import java.io.IOException;
 
 public class Main {
@@ -31,7 +27,6 @@ public class Main {
             graphFeature2.addNode("i");
             String[] newNodes = {"j", "k", "l"};
             graphFeature2.addNodes(newNodes);
-
             System.out.println(graphFeature2.printGraph());
 
             // Generate the updated graph image after adding nodes
@@ -44,17 +39,22 @@ public class Main {
             graphFeature3.addEdge("b", "j");
             graphFeature3.addEdge("c", "k");
             graphFeature3.addEdge("d", "l");
-
             System.out.println(graphFeature3.printGraph());
 
-            // Step 4: Test removeMultipleNodes feature
+            // Step 4: Remove specific edges before removing nodes
+            System.out.println("\n=== Step 6: Removing an Edge ===");
+            removeEdge edgeRemover = new removeEdge(graphManager.getGraph());
+            edgeRemover.removeEdge("a", "i");
+            edgeRemover.removeEdge("b", "j");
+            System.out.println(edgeRemover.printGraph());
+
+            // Step 5: Remove multiple nodes
             removeMultipleNodes remover = new removeMultipleNodes(graphManager.getGraph());
             String[] nodesToRemove = {"i", "j"};
             remover.removeNodes(nodesToRemove);
+            System.out.println(remover.printGraph());
 
-            System.out.println(remover.printGraph()); // Print graph after removing nodes
-
-            // Step 5: Generate final graph output
+            // Step 6: Generate final graph output after all modifications
             outputGraph outputFeature4 = new outputGraph(graphManager.getGraph());
             outputFeature4.outputDOTGraph(outputDotPath);
             outputFeature4.outputGraphics(outputFilePath4, "png");
@@ -64,9 +64,14 @@ public class Main {
 
         } catch (IOException e) {
             System.out.println("Error: " + e.getMessage());
+        } catch (NoSuchElementException e) {
+            System.out.println("Error: One or both nodes do not exist for the edge removal.");
         }
     }
 }
+
+
+
 
 
 
