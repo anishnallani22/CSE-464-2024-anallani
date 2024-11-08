@@ -30,6 +30,7 @@ public class removeNode {
         System.out.println("Node '" + label + "' removed");
     }
 
+    //Print Graph Details
     public String printGraph() {
         StringBuilder sb = new StringBuilder();
         sb.append("Graph Details after removing node:\n");
