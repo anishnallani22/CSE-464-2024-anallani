@@ -199,6 +199,47 @@ public class GraphParserTest {
     }
 
     //Test Feature 7: Removing an edge
+    @Test
+    @Order(7)
+    public void testRemoveEdge() throws IOException {
+        System.out.println("\n=== Testing Feature 7: Removing an Edge ===");
+        String inputFilePath = "src/main/resources/input.dot";
+        GraphGenerator graphManager = new GraphGenerator();
+        graphManager.parseGraph(inputFilePath);
+
+        // Add nodes
+        NodeModifier nodeModifier = new NodeModifier(graphManager.getGraph());
+        nodeModifier.addNode("i");
+        String[] newNodes = {"j", "k", "l"};
+        nodeModifier.addNodes(newNodes);
+
+        // Add edges
+        addEdges graphFeature3 = new addEdges(graphManager.getGraph());
+        graphFeature3.addEdge("a", "i");
+        graphFeature3.addEdge("b", "j");
+        graphFeature3.addEdge("c", "k");
+
+        // Ensure the edges exist
+        assertTrue(graphManager.getGraph().containsEdge("a", "i"), "Edge 'a -> i' should exist before removal");
+        assertTrue(graphManager.getGraph().containsEdge("b", "j"), "Edge 'b -> j' should exist before removal");
+
+
+        removeEdge edgeRemover = new removeEdge(graphManager.getGraph());
+
+        //Scenario 1: Successfully remove existing edges
+        edgeRemover.removeEdge("a", "i");
+        edgeRemover.removeEdge("b", "j");
+
+        //Verify edges are removed
+        assertFalse(graphManager.getGraph().containsEdge("a", "i"), "Edge 'a -> i' was not removed");
+        assertFalse(graphManager.getGraph().containsEdge("b", "j"), "Edge 'b -> j' was not removed");
+
+        //Scenario 2: Attempt to remove a non-existent edge
+        assertThrows(NoSuchElementException.class, () -> {
+            edgeRemover.removeEdge("x", "y");
+        }, "Should throw NoSuchElementException when removing non-existent edge");
+        System.out.println("");
+    }
 
 
 }
