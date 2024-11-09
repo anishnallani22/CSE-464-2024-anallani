@@ -41,20 +41,15 @@ public class Main {
             graphFeature3.addEdge("d", "l");
             System.out.println(graphFeature3.printGraph());
 
-            // Step 4: Remove specific edges before removing nodes
-            System.out.println("\n=== Step 6: Removing an Edge ===");
-            removeEdge edgeRemover = new removeEdge(graphManager.getGraph());
-            edgeRemover.removeEdge("a", "i");
-            edgeRemover.removeEdge("b", "j");
-            System.out.println(edgeRemover.printGraph());
+            // Step 4: Run DFS search from node 'a' to 'l'
+            Path dfsPath = Path.graphSearchDFS(graphManager.getGraph(), "a", "l");
+            if (dfsPath != null) {
+                System.out.println("Path found using DFS: " + dfsPath);
+            } else {
+                System.out.println("No path found using DFS");
+            }
 
-            // Step 5: Remove multiple nodes
-            removeMultipleNodes remover = new removeMultipleNodes(graphManager.getGraph());
-            String[] nodesToRemove = {"i", "j"};
-            remover.removeNodes(nodesToRemove);
-            System.out.println(remover.printGraph());
-
-            // Step 6: Generate final graph output after all modifications
+            // Step 5: Generate final graph output after all modifications
             outputGraph outputFeature4 = new outputGraph(graphManager.getGraph());
             outputFeature4.outputDOTGraph(outputDotPath);
             outputFeature4.outputGraphics(outputFilePath4, "png");
@@ -69,6 +64,7 @@ public class Main {
         }
     }
 }
+
 
 
 
