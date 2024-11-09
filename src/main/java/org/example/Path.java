@@ -1,14 +1,18 @@
 package org.example;
 
+import org.jgrapht.Graph;
 import org.jgrapht.graph.DefaultEdge;
-
 import java.util.*;
 
 public class Path {
     private List<String> nodes;
 
-    public Path(List<String> nodes) {
-        this.nodes = nodes;
+    public Path() {
+        this.nodes = new ArrayList<>();
+    }
+
+    public void addNode(String node) {
+        nodes.add(node);
     }
 
     @Override
@@ -16,46 +20,79 @@ public class Path {
         return String.join(" -> ", nodes);
     }
 
-    public List<String> getNodes() {
-        return nodes;
+    public static Path GraphSearch(Graph<String, DefaultEdge> graph, String src, String dst, Algorithm algo) {
+        if (algo == Algorithm.BFS) {
+            return graphSearchBFS(graph, src, dst);
+        } else {
+            return graphSearchDFS(graph, src, dst);
+        }
     }
 
-    // BFS Algorithm to find a path
-    public static Path GraphSearchBFS(org.jgrapht.Graph<String, DefaultEdge> graph, String src, String dst) {
-        if (!graph.containsVertex(src) || !graph.containsVertex(dst)) {
-            return null;
-        }
-
+    // BFS algorithm
+    private static Path graphSearchBFS(Graph<String, DefaultEdge> graph, String src, String dst) {
         Queue<String> queue = new LinkedList<>();
         Map<String, String> parentMap = new HashMap<>();
+        Set<String> visited = new HashSet<>();
+
         queue.add(src);
-        parentMap.put(src, null);
+        visited.add(src);
 
         while (!queue.isEmpty()) {
-            String currentNode = queue.poll();
+            String current = queue.poll();
 
-            if (currentNode.equals(dst)) {
-                return buildPath(src, dst, parentMap);
+            if (current.equals(dst)) {
+                return buildPath(parentMap, src, dst);
             }
 
-            for (DefaultEdge edge : graph.outgoingEdgesOf(currentNode)) {
+            for (DefaultEdge edge : graph.outgoingEdgesOf(current)) {
                 String neighbor = graph.getEdgeTarget(edge);
-                if (!parentMap.containsKey(neighbor)) {
-                    parentMap.put(neighbor, currentNode);
+                if (!visited.contains(neighbor)) {
                     queue.add(neighbor);
+                    visited.add(neighbor);
+                    parentMap.put(neighbor, current);
                 }
             }
         }
         return null;
     }
 
-    private static Path buildPath(String src, String dst, Map<String, String> parentMap) {
-        List<String> pathList = new ArrayList<>();
-        for (String at = dst; at != null; at = parentMap.get(at)) {
-            pathList.add(at);
+    // DFS algorithm
+    private static Path graphSearchDFS(Graph<String, DefaultEdge> graph, String src, String dst) {
+        Stack<String> stack = new Stack<>();
+        Map<String, String> parentMap = new HashMap<>();
+        Set<String> visited = new HashSet<>();
+
+        stack.push(src);
+        visited.add(src);
+
+        while (!stack.isEmpty()) {
+            String current = stack.pop();
+
+            if (current.equals(dst)) {
+                return buildPath(parentMap, src, dst);
+            }
+
+            for (DefaultEdge edge : graph.outgoingEdgesOf(current)) {
+                String neighbor = graph.getEdgeTarget(edge);
+                if (!visited.contains(neighbor)) {
+                    stack.push(neighbor);
+                    visited.add(neighbor);
+                    parentMap.put(neighbor, current);
+                }
+            }
         }
-        Collections.reverse(pathList);
-        return new Path(pathList);
+        return null;
+    }
+
+    //Build the path
+    private static Path buildPath(Map<String, String> parentMap, String src, String dst) {
+        Path path = new Path();
+        for (String node = dst; node != null; node = parentMap.get(node)) {
+            path.addNode(node);
+        }
+        Collections.reverse(path.nodes);
+        return path;
     }
 }
+
 
