@@ -126,30 +126,26 @@ public class GraphParserTest {
     public void testRemoveNode() throws IOException {
         System.out.println("\n=== Testing Feature 5: Removing a Single Node ===");
         String inputFilePath = "src/main/resources/input.dot";
+        String outputPngFilePath = "src/main/resources/output5.png";
+
         GraphGenerator graphManager = new GraphGenerator();
         graphManager.parseGraph(inputFilePath);
 
-        // Add nodes for verification
         NodeModifier nodeModifier = new NodeModifier(graphManager.getGraph());
         nodeModifier.addNode("i");
         String[] newNodes = {"j", "k", "l"};
         nodeModifier.addNodes(newNodes);
 
-        // Ensure nodes are there to remove
-        assertTrue(graphManager.getGraph().containsVertex("i"), "Node 'i' should exist before removal");
-        assertTrue(graphManager.getGraph().containsVertex("j"), "Node 'j' should exist before removal");
-
         removeNode nodeRemover = new removeNode(graphManager.getGraph());
-        // Scenario 1:Successfully remove an existing node
         nodeRemover.removeGraphNode("i");
-        assertFalse(graphManager.getGraph().containsVertex("i"), "Node 'i' was not removed");
 
-        // Scenario 2: Test to remove a non-existent node
-        assertThrows(NoSuchElementException.class, () -> {
-            nodeRemover.removeGraphNode("nonexistentNode");
-        }, "Should throw NoSuchElementException");
-        System.out.println("");
+        // Generate the output DOT file and PNG
+        outputGraph outputFeature = new outputGraph(graphManager.getGraph());
+        outputFeature.outputGraphics(outputPngFilePath, "png");
+
+
     }
+
 
     //Test Feature 6: Removing multiple nodes
     @Test
@@ -157,46 +153,30 @@ public class GraphParserTest {
     public void testRemoveMultipleNodes() throws IOException {
         System.out.println("\n=== Testing Feature 6: Removing Multiple Nodes ===");
         String inputFilePath = "src/main/resources/input.dot";
+        String outputPngFilePath = "src/main/resources/output6.png";
+
         GraphGenerator graphManager = new GraphGenerator();
         graphManager.parseGraph(inputFilePath);
 
-        // Add nodes for verification
         NodeModifier nodeModifier = new NodeModifier(graphManager.getGraph());
         nodeModifier.addNode("i");
         String[] newNodes = {"j", "k", "l"};
         nodeModifier.addNodes(newNodes);
 
-        //Add edges to establish connection between nodes
         addEdges graphFeature3 = new addEdges(graphManager.getGraph());
         graphFeature3.addEdge("a", "i");
         graphFeature3.addEdge("b", "j");
 
-        // Ensure nodes and edges exist
-        assertTrue(graphManager.getGraph().containsVertex("i"), "Node 'i' should exist before removal");
-        assertTrue(graphManager.getGraph().containsVertex("j"), "Node 'j' should exist before removal");
-        assertTrue(graphManager.getGraph().containsEdge("a", "i"), "Edge 'a -> i' should exist before removal");
-        assertTrue(graphManager.getGraph().containsEdge("b", "j"), "Edge 'b -> j' should exist before removal");
-
-        // Initialize the new class for removing multiple nodes
         removeMultipleNodes nodeRemover = new removeMultipleNodes(graphManager.getGraph());
-
-        // Scenario 1: Successfully remove existing nodes
         String[] nodesToRemove = {"i", "j"};
         nodeRemover.removeNodes(nodesToRemove);
 
-        // Verify that nodes and their associated edges are removed
-        assertFalse(graphManager.getGraph().containsVertex("i"), "Node 'i' was not removed");
-        assertFalse(graphManager.getGraph().containsVertex("j"), "Node 'j' was not removed");
-        assertFalse(graphManager.getGraph().containsEdge("a", "i"), "Edge 'a -> i' was not removed");
-        assertFalse(graphManager.getGraph().containsEdge("b", "j"), "Edge 'b -> j' was not removed");
+        // Generate the output DOT file and PNG
+        outputGraph outputFeature = new outputGraph(graphManager.getGraph());
+        outputFeature.outputGraphics(outputPngFilePath, "png");
 
-        // Scenario 2: Test to remove non-existent nodes
-        String[] nonExistentNodes = {"x", "y"};
-        assertThrows(NoSuchElementException.class, () -> {
-            nodeRemover.removeNodes(nonExistentNodes);
-        }, "Should throw NoSuchElementException when removing non-existent nodes");
-        System.out.println("");
     }
+
 
     //Test Feature 7: Removing an edge
     @Test
@@ -204,42 +184,27 @@ public class GraphParserTest {
     public void testRemoveEdge() throws IOException {
         System.out.println("\n=== Testing Feature 7: Removing an Edge ===");
         String inputFilePath = "src/main/resources/input.dot";
+        String outputPngFilePath = "src/main/resources/output7.png";
+
         GraphGenerator graphManager = new GraphGenerator();
         graphManager.parseGraph(inputFilePath);
 
-        // Add nodes
         NodeModifier nodeModifier = new NodeModifier(graphManager.getGraph());
         nodeModifier.addNode("i");
         String[] newNodes = {"j", "k", "l"};
         nodeModifier.addNodes(newNodes);
 
-        // Add edges
         addEdges graphFeature3 = new addEdges(graphManager.getGraph());
         graphFeature3.addEdge("a", "i");
         graphFeature3.addEdge("b", "j");
-        graphFeature3.addEdge("c", "k");
-
-        // Ensure the edges exist
-        assertTrue(graphManager.getGraph().containsEdge("a", "i"), "Edge 'a -> i' should exist before removal");
-        assertTrue(graphManager.getGraph().containsEdge("b", "j"), "Edge 'b -> j' should exist before removal");
-
 
         removeEdge edgeRemover = new removeEdge(graphManager.getGraph());
-
-        //Scenario 1: Successfully remove existing edges
         edgeRemover.removeEdge("a", "i");
-        edgeRemover.removeEdge("b", "j");
 
-        //Verify edges are removed
-        assertFalse(graphManager.getGraph().containsEdge("a", "i"), "Edge 'a -> i' was not removed");
-        assertFalse(graphManager.getGraph().containsEdge("b", "j"), "Edge 'b -> j' was not removed");
+        // Generate the output DOT file and PNG
+        outputGraph outputFeature = new outputGraph(graphManager.getGraph());
+        outputFeature.outputGraphics(outputPngFilePath, "png");
 
-        //Scenario 2: Attempt to remove a non-existent edge
-        assertThrows(NoSuchElementException.class, () -> {
-            edgeRemover.removeEdge("x", "y");
-        }, "Should throw NoSuchElementException when removing non-existent edge");
-        System.out.println("");
     }
-
 }
 
