@@ -29,7 +29,7 @@ public class outputGraph {
                 printWriter.printf("  %s -> %s;%n", source, target);  // No quotes around source and target
             });
             printWriter.println("}");
-            System.out.println("Graph successfully written to DOT file without quotes: " + path);
+            System.out.println("Graph successfully written to DOT file: " + path);
         } catch (IOException e) {
             System.out.println("Error writing DOT file: " + e.getMessage());
             throw e;

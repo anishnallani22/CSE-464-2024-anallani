@@ -20,7 +20,21 @@ public class Path {
         return String.join(" -> ", nodes);
     }
 
+    // Main GraphSearch method using BFS or DFS based on the algorithm
     public static Path GraphSearch(Graph<String, DefaultEdge> graph, String src, String dst, Algorithm algo) {
+        if (graph == null || src == null || dst == null) return null;
+
+        if (!graph.containsVertex(src) || !graph.containsVertex(dst)) {
+            System.out.println("Source or destination node not found in graph");
+            return null;
+        }
+
+        if (src.equals(dst)) {
+            Path path = new Path();
+            path.addNode(src);
+            return path;
+        }
+
         if (algo == Algorithm.BFS) {
             return graphSearchBFS(graph, src, dst);
         } else {
@@ -46,6 +60,9 @@ public class Path {
 
             for (DefaultEdge edge : graph.outgoingEdgesOf(current)) {
                 String neighbor = graph.getEdgeTarget(edge);
+                if (neighbor.equals(current)) {
+                    neighbor = graph.getEdgeSource(edge);
+                }
                 if (!visited.contains(neighbor)) {
                     queue.add(neighbor);
                     visited.add(neighbor);
@@ -74,6 +91,9 @@ public class Path {
 
             for (DefaultEdge edge : graph.outgoingEdgesOf(current)) {
                 String neighbor = graph.getEdgeTarget(edge);
+                if (neighbor.equals(current)) {
+                    neighbor = graph.getEdgeSource(edge);
+                }
                 if (!visited.contains(neighbor)) {
                     stack.push(neighbor);
                     visited.add(neighbor);
@@ -84,7 +104,7 @@ public class Path {
         return null;
     }
 
-    //Build the path
+    // Build the path from the parent map
     private static Path buildPath(Map<String, String> parentMap, String src, String dst) {
         Path path = new Path();
         for (String node = dst; node != null; node = parentMap.get(node)) {
@@ -94,5 +114,6 @@ public class Path {
         return path;
     }
 }
+
 
 
