@@ -10,14 +10,16 @@ public class addEdges {
         this.graph = graph;
     }
 
-    public void addEdge(String srcLabel, String dstLabel) {
-        if (!graph.containsVertex(srcLabel)) {
-            System.out.println("Source node '" + srcLabel + "' does not exist.");
-            return;
+    private boolean checkNodeExists(String label) {
+        if (!graph.containsVertex(label)) {
+            System.out.println("Node '" + label + "' does not exist.");
+            return false;
         }
+        return true;
+    }
 
-        if (!graph.containsVertex(dstLabel)) {
-            System.out.println("Destination node '" + dstLabel + "' does not exist.");
+    public void addEdge(String srcLabel, String dstLabel) {
+        if (!checkNodeExists(srcLabel) || !checkNodeExists(dstLabel)) {
             return;
         }
 
