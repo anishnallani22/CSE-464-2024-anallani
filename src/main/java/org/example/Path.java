@@ -23,42 +23,25 @@ public class Path {
     }
 
     //Strategy Pattern
-    public static Path GraphSearch(Graph<String, DefaultEdge> graph, String src, String dst, Algorithm algo) {
-        if (graph == null || src == null || dst == null) {
-            System.out.println("Invalid input: graph, source, or destination is null.");
+    public static Path GraphSearch(String src, String dst, GraphStrategyPattern strategy) {
+        if (!strategy.getGraph().containsVertex(src) || !strategy.getGraph().containsVertex(dst)) {
             return null;
         }
 
-        // Check if source and destination nodes exist in the graph
-        if (!graph.containsVertex(src) || !graph.containsVertex(dst)) {
-            System.out.println("Source or destination node not found in graph");
-            return null;
-        }
-
-
-        if (src.equals(dst)) {
-            Path path = new Path();
-            path.addNode(src);
-            return path;
-        }
-
-        GraphStrategyPattern strategy;
-        if (algo == Algorithm.BFS) {
-            strategy = new BFSTemplate(graph);
-        } else if (algo == Algorithm.DFS) {
-            strategy = new DFSTemplate(graph);
-        } else {
-            throw new IllegalArgumentException("Unknown algorithm: " + algo);
-        }
-
-        GraphAlgorithmContext context = new GraphAlgorithmContext(strategy);
-        return context.performSearch(graph, src, dst);
+        return strategy.search(strategy.getGraph(), src, dst);
     }
 
+
+
+
+
+    // Get the list of nodes in the path
     public List<String> getNodes() {
         return nodes;
     }
 }
+
+
 
 
 

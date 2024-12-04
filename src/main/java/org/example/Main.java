@@ -43,18 +43,20 @@ public class Main {
             System.out.println("\nEdges added:");
             System.out.println(GraphPrintingUtility.printGraph(graphManager.getGraph()));
 
-            // Step 4: Perform BFS search
+            // Step 4: Perform BFS search using Strategy Pattern
             System.out.println("\n=== Performing BFS Search ===");
-            Path bfsPath = Path.GraphSearch(graphManager.getGraph(), "a", "l", Algorithm.BFS);
+            GraphStrategyPattern bfsStrategy = new BFSTemplate(graphManager.getGraph()); // Instantiate BFS strategy
+            Path bfsPath = Path.GraphSearch("a", "l", bfsStrategy); // Call GraphSearch with BFS strategy
             if (bfsPath != null) {
                 System.out.println("Path found using BFS: " + bfsPath);
             } else {
                 System.out.println("No path found using BFS");
             }
 
-            // Step 5: Perform DFS search
+// Step 5: Perform DFS search using Strategy Pattern
             System.out.println("\n=== Performing DFS Search ===");
-            Path dfsPath = Path.GraphSearch(graphManager.getGraph(), "a", "l", Algorithm.DFS);
+            GraphStrategyPattern dfsStrategy = new DFSTemplate(graphManager.getGraph()); // Instantiate DFS strategy
+            Path dfsPath = Path.GraphSearch("a", "l", dfsStrategy); // Call GraphSearch with DFS strategy
             if (dfsPath != null) {
                 System.out.println("Path found using DFS: " + dfsPath);
             } else {

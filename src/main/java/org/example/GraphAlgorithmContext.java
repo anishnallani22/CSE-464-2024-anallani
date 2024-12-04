@@ -10,8 +10,15 @@ public class GraphAlgorithmContext {
         this.strategy = strategy;
     }
 
-    public Path performSearch(Graph<String, DefaultEdge> graph, String src, String dst) {
+    public static Path GraphSearch(Graph<String, DefaultEdge> graph, String src, String dst, GraphStrategyPattern strategy) {
+        // Validate inputs
+        if (graph == null || src == null || dst == null || strategy == null) {
+            throw new IllegalArgumentException("Invalid input parameters");
+        }
+
+        // Execute the search strategy
         return strategy.search(graph, src, dst);
     }
+
 }
 
