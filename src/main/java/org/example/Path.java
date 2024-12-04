@@ -20,7 +20,7 @@ public class Path {
         return String.join(" -> ", nodes);
     }
 
-    // Main GraphSearch method using BFS or DFS based on the algorithm
+    // Main GraphSearch method using BFSTemplate or DFSTemplate
     public static Path GraphSearch(Graph<String, DefaultEdge> graph, String src, String dst, Algorithm algo) {
         if (graph == null || src == null || dst == null) return null;
 
@@ -36,83 +36,18 @@ public class Path {
         }
 
         if (algo == Algorithm.BFS) {
-            return graphSearchBFS(graph, src, dst);
+            return new BFSTemplate(graph).search(src, dst);
         } else {
-            return graphSearchDFS(graph, src, dst);
+            return new DFSTemplate(graph).search(src, dst);
         }
     }
 
-    // BFS algorithm
-    private static Path graphSearchBFS(Graph<String, DefaultEdge> graph, String src, String dst) {
-        Queue<String> queue = new LinkedList<>();
-        Map<String, String> parentMap = new HashMap<>();
-        Set<String> visited = new HashSet<>();
-
-        queue.add(src);
-        visited.add(src);
-
-        while (!queue.isEmpty()) {
-            String current = queue.poll();
-
-            if (current.equals(dst)) {
-                return buildPath(parentMap, src, dst);
-            }
-
-            for (DefaultEdge edge : graph.outgoingEdgesOf(current)) {
-                String neighbor = graph.getEdgeTarget(edge).equals(current) ? graph.getEdgeSource(edge) : graph.getEdgeTarget(edge);
-
-                if (!visited.contains(neighbor)) {
-                    queue.add(neighbor);
-                    visited.add(neighbor);
-                    parentMap.put(neighbor, current);
-                }
-            }
-
-        }
-        return null;
-    }
-
-    // DFS algorithm
-    private static Path graphSearchDFS(Graph<String, DefaultEdge> graph, String src, String dst) {
-        Stack<String> stack = new Stack<>();
-        Map<String, String> parentMap = new HashMap<>();
-        Set<String> visited = new HashSet<>();
-
-        stack.push(src);
-        visited.add(src);
-
-        while (!stack.isEmpty()) {
-            String current = stack.pop();
-
-            if (current.equals(dst)) {
-                return buildPath(parentMap, src, dst);
-            }
-
-            for (DefaultEdge edge : graph.outgoingEdgesOf(current)) {
-                String neighbor = graph.getEdgeTarget(edge);
-                if (neighbor.equals(current)) {
-                    neighbor = graph.getEdgeSource(edge);
-                }
-                if (!visited.contains(neighbor)) {
-                    stack.push(neighbor);
-                    visited.add(neighbor);
-                    parentMap.put(neighbor, current);
-                }
-            }
-        }
-        return null;
-    }
-
-    // Build the path from the parent map
-    private static Path buildPath(Map<String, String> parentMap, String src, String dst) {
-        Path path = new Path();
-        for (String node = dst; node != null; node = parentMap.get(node)) {
-            path.addNode(node);
-        }
-        Collections.reverse(path.nodes);
-        return path;
+    public List<String> getNodes() {
+        return nodes;
     }
 }
+
+
 
 
 
