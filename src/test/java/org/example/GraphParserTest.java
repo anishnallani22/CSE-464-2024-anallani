@@ -47,7 +47,8 @@ public class GraphParserTest {
         String[] newNodes = {"j", "k", "l"};
         graphFeature2.addNodes(newNodes);
 
-        String actualOutput = graphFeature2.printGraph();
+        String actualOutput = GraphPrintingUtility.printGraph(graphManager.getGraph());
+
         String expectedOutput = Files.readString(Paths.get(expectedFilePath));
 
         assertEquals(expectedOutput.trim(), actualOutput.trim(), "The nodes do not match the expected output after adding new nodes");
@@ -78,7 +79,7 @@ public class GraphParserTest {
         graphFeature3.addEdge("c", "k");
         graphFeature3.addEdge("d", "l");
 
-        String actualOutput = graphFeature3.printGraph();
+        String actualOutput = GraphPrintingUtility.printGraph(graphManager.getGraph());
         String expectedOutput = Files.readString(Paths.get(expectedFilePath));
 
         assertEquals(expectedOutput.trim(), actualOutput.trim(), "The edges do not match the expected output after adding new edges");

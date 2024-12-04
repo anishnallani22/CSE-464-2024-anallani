@@ -1,4 +1,4 @@
-Graph Details after adding edges:
+Graph Details:
 Number of nodes: 12
 Nodes: [f, h, a, b, e, d, c, g, i, j, k, l]
 Number of edges: 13

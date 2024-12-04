@@ -28,7 +28,7 @@ public class Main {
             String[] newNodes = {"j", "k", "l"};
             graphFeature2.addNodes(newNodes);
             System.out.println("\nNodes added:");
-            System.out.println(graphFeature2.printGraph());
+            System.out.println(GraphPrintingUtility.printGraph(graphManager.getGraph()));
 
             // Generate the updated graph image after adding nodes
             graphManager.outputGraph(outputFilePath2);
@@ -41,7 +41,7 @@ public class Main {
             graphFeature3.addEdge("c", "k");
             graphFeature3.addEdge("d", "l");
             System.out.println("\nEdges added:");
-            System.out.println(graphFeature3.printGraph());
+            System.out.println(GraphPrintingUtility.printGraph(graphManager.getGraph()));
 
             // Step 4: Perform BFS search
             System.out.println("\n=== Performing BFS Search ===");

@@ -30,20 +30,20 @@ public class removeEdge {
     }
 
     // Print graph details
-    public String printGraph() {
-        StringBuilder sb = new StringBuilder();
-        sb.append("Graph Details after removing edge:\n");
-        sb.append("Number of nodes: ").append(graph.vertexSet().size()).append("\n");
-        sb.append("Nodes: ").append(graph.vertexSet()).append("\n");
-        sb.append("Number of edges: ").append(graph.edgeSet().size()).append("\n");
-        sb.append("Edges:\n");
-        graph.edgeSet().forEach(edge -> {
-            String source = graph.getEdgeSource(edge);
-            String target = graph.getEdgeTarget(edge);
-            sb.append(source).append(" -> ").append(target).append("\n");
-        });
-        return sb.toString();
-    }
+//    public String printGraph() {
+//        StringBuilder sb = new StringBuilder();
+//        sb.append("Graph Details after removing edge:\n");
+//        sb.append("Number of nodes: ").append(graph.vertexSet().size()).append("\n");
+//        sb.append("Nodes: ").append(graph.vertexSet()).append("\n");
+//        sb.append("Number of edges: ").append(graph.edgeSet().size()).append("\n");
+//        sb.append("Edges:\n");
+//        graph.edgeSet().forEach(edge -> {
+//            String source = graph.getEdgeSource(edge);
+//            String target = graph.getEdgeTarget(edge);
+//            sb.append(source).append(" -> ").append(target).append("\n");
+//        });
+//        return sb.toString();
+//    }
 }
 
 
