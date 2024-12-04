@@ -2,7 +2,9 @@ package org.example;
 
 import org.jgrapht.Graph;
 import org.jgrapht.graph.DefaultEdge;
-import java.util.*;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class Path {
     private List<String> nodes;
@@ -20,14 +22,19 @@ public class Path {
         return String.join(" -> ", nodes);
     }
 
-    // Main GraphSearch method using BFSTemplate or DFSTemplate
+    //Strategy Pattern
     public static Path GraphSearch(Graph<String, DefaultEdge> graph, String src, String dst, Algorithm algo) {
-        if (graph == null || src == null || dst == null) return null;
+        if (graph == null || src == null || dst == null) {
+            System.out.println("Invalid input: graph, source, or destination is null.");
+            return null;
+        }
 
+        // Check if source and destination nodes exist in the graph
         if (!graph.containsVertex(src) || !graph.containsVertex(dst)) {
             System.out.println("Source or destination node not found in graph");
             return null;
         }
+
 
         if (src.equals(dst)) {
             Path path = new Path();
@@ -35,19 +42,23 @@ public class Path {
             return path;
         }
 
+        GraphStrategyPattern strategy;
         if (algo == Algorithm.BFS) {
-            return new BFSTemplate(graph).search(src, dst);
+            strategy = new BFSTemplate(graph);
+        } else if (algo == Algorithm.DFS) {
+            strategy = new DFSTemplate(graph);
         } else {
-            return new DFSTemplate(graph).search(src, dst);
+            throw new IllegalArgumentException("Unknown algorithm: " + algo);
         }
+
+        GraphAlgorithmContext context = new GraphAlgorithmContext(strategy);
+        return context.performSearch(graph, src, dst);
     }
 
     public List<String> getNodes() {
         return nodes;
     }
 }
-
-
 
 
 

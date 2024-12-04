@@ -6,7 +6,7 @@ import org.jgrapht.graph.DefaultEdge;
 import java.util.LinkedList;
 import java.util.Queue;
 
-public class BFSTemplate extends GraphSearchTemplate {
+public class BFSTemplate extends GraphSearchTemplate implements GraphStrategyPattern {
     private Queue<String> queue;
 
     public BFSTemplate(Graph<String, DefaultEdge> graph) {
@@ -33,5 +33,14 @@ public class BFSTemplate extends GraphSearchTemplate {
     protected void addToCollection(String node) {
         queue.add(node);
     }
+
+    @Override
+    public Path search(Graph<String, DefaultEdge> graph, String src, String dst) {
+        return super.search(src, dst);
+    }
 }
+
+
+
+
 
