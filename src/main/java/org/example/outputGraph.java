@@ -17,17 +17,20 @@ public class outputGraph {
         this.graph = graph;
     }
 
+    private void writeEdges(PrintWriter printWriter) {
+        graph.edgeSet().forEach(edge -> {
+            String source = graph.getEdgeSource(edge);
+            String target = graph.getEdgeTarget(edge);
+            printWriter.printf("  %s -> %s;%n", source, target);
+        });
+    }
+
     public void outputDOTGraph(String path) throws IOException {
         try (FileWriter fileWriter = new FileWriter(path);
              PrintWriter printWriter = new PrintWriter(fileWriter)) {
 
-            // Write the DOT representation of the graph without quotes
             printWriter.println("digraph G {");
-            graph.edgeSet().forEach(edge -> {
-                String source = graph.getEdgeSource(edge);
-                String target = graph.getEdgeTarget(edge);
-                printWriter.printf("  %s -> %s;%n", source, target);  // No quotes around source and target
-            });
+            writeEdges(printWriter);
             printWriter.println("}");
             System.out.println("Graph successfully written to DOT file: " + path);
         } catch (IOException e) {
@@ -35,6 +38,7 @@ public class outputGraph {
             throw e;
         }
     }
+
 
 
     public void outputGraphics(String path, String format) throws IOException {
