@@ -59,16 +59,15 @@ public class Path {
             }
 
             for (DefaultEdge edge : graph.outgoingEdgesOf(current)) {
-                String neighbor = graph.getEdgeTarget(edge);
-                if (neighbor.equals(current)) {
-                    neighbor = graph.getEdgeSource(edge);
-                }
+                String neighbor = graph.getEdgeTarget(edge).equals(current) ? graph.getEdgeSource(edge) : graph.getEdgeTarget(edge);
+
                 if (!visited.contains(neighbor)) {
                     queue.add(neighbor);
                     visited.add(neighbor);
                     parentMap.put(neighbor, current);
                 }
             }
+
         }
         return null;
     }
