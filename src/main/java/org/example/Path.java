@@ -19,8 +19,9 @@ public class Path {
 
     @Override
     public String toString() {
-        return String.join(" -> ", nodes);
+        return "Path{nodes=[" + String.join(", ", nodes) + "]}";
     }
+
 
     //Strategy Pattern
     public static Path GraphSearch(String src, String dst, GraphStrategyPattern strategy) {
@@ -30,9 +31,6 @@ public class Path {
 
         return strategy.search(strategy.getGraph(), src, dst);
     }
-
-
-
 
 
     // Get the list of nodes in the path

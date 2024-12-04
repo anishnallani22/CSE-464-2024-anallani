@@ -4,9 +4,8 @@ digraph {
     c -> d;
     d -> a;
     a -> e;
+    e -> f;
     e -> g;
-    h -> d;
     f -> h;
     g -> h;
 }
-

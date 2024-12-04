@@ -1,17 +1,17 @@
 Graph Details:
 Number of nodes: 12
-Nodes: [f, h, a, b, e, d, c, g, i, j, k, l]
+Nodes: [f, h, b, c, d, a, e, g, i, j, k, l]
 Number of edges: 13
 Edges:
 f -> h
+b -> c
+d -> a
+c -> d
 a -> b
 a -> e
-h -> d
-b -> c
-c -> d
-e -> g
-d -> a
 g -> h
+e -> f
+e -> g
 a -> i
 b -> j
 c -> k

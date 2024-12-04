@@ -1,14 +1,14 @@
 Graph Details:
 Number of nodes: 8
-Nodes: [f, h, a, b, e, d, c, g]
+Nodes: [f, h, b, c, d, a, e, g]
 Number of edges: 9
 Edges:
 f -> h
+b -> c
+d -> a
+c -> d
 a -> b
 a -> e
-h -> d
-b -> c
-c -> d
-e -> g
-d -> a
 g -> h
+e -> f
+e -> g

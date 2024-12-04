@@ -18,6 +18,8 @@ public class Main {
             GraphGenerator graphManager = new GraphGenerator();
             graphManager.parseGraph(inputFilePath);
 
+
+
             // Generate the original graph image
             graphManager.outputGraph(outputFilePath1);
             System.out.println("Original graph image generated at: " + outputFilePath1);
@@ -53,7 +55,7 @@ public class Main {
                 System.out.println("No path found using BFS");
             }
 
-// Step 5: Perform DFS search using Strategy Pattern
+            // Step 5: Perform DFS search using Strategy Pattern
             System.out.println("\n=== Performing DFS Search ===");
             GraphStrategyPattern dfsStrategy = new DFSTemplate(graphManager.getGraph()); // Instantiate DFS strategy
             Path dfsPath = Path.GraphSearch("a", "l", dfsStrategy); // Call GraphSearch with DFS strategy
@@ -69,6 +71,21 @@ public class Main {
             outputFeature4.outputGraphics(outputFilePath4, "png");
             System.out.println("Final graph image generated at: " + outputFilePath4);
             System.out.println("DOT file generated at: " + outputDotPath);
+
+            // Step 7: Perform Random Walk Search
+            System.out.println("\n=== Performing Random Walk Search ===");
+            GraphStrategyPattern randomWalkStrategy = new RandomWalkSearchTemplate(graphManager.getGraph());
+
+            for (int i = 0; i < 10; i++) {
+                Path randomWalkPath = Path.GraphSearch("a", "c", randomWalkStrategy);
+                if (randomWalkPath != null) {
+                    System.out.println("Path{nodes=" + randomWalkPath.getNodes() + "}");
+                }
+            }
+
+
+
+
 
         } catch (IOException e) {
             System.out.println("Error: " + e.getMessage());

@@ -1,13 +1,13 @@
 digraph G {
   f -> h;
+  b -> c;
+  d -> a;
+  c -> d;
   a -> b;
   a -> e;
-  h -> d;
-  b -> c;
-  c -> d;
-  e -> g;
-  d -> a;
   g -> h;
+  e -> f;
+  e -> g;
   a -> i;
   b -> j;
   c -> k;

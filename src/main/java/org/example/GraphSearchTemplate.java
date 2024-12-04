@@ -57,6 +57,9 @@ public abstract class GraphSearchTemplate {
     protected abstract boolean isCollectionEmpty();
     protected abstract String getNextNode();
     protected abstract void addToCollection(String node);
+    protected abstract boolean isVisited(String node);
+    protected abstract void markVisited(String node);
+
 
     private Path buildPath(String src, String dst) {
         Path path = new Path();
