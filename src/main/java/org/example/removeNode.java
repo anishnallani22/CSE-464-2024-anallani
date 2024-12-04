@@ -13,7 +13,7 @@ public class removeNode {
         this.graph = graph;
     }
 
-    public void removeGraphNode(String label) {
+    public void removeNode(String label) {
         // Check if the node exists
         if (!graph.containsVertex(label)) {
             throw new NoSuchElementException("Node with label '" + label + "' does not exist.");

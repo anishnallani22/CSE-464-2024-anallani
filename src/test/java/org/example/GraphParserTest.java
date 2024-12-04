@@ -138,7 +138,7 @@ public class GraphParserTest {
         nodeModifier.addNodes(newNodes);
 
         removeNode nodeRemover = new removeNode(graphManager.getGraph());
-        nodeRemover.removeGraphNode("i");
+        nodeRemover.removeNode("i");
 
         // Generate the output DOT file and PNG
         outputGraph outputFeature = new outputGraph(graphManager.getGraph());
