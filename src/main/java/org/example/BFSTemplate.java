@@ -4,7 +4,7 @@ import org.jgrapht.Graph;
 import org.jgrapht.graph.DefaultEdge;
 
 import java.util.*;
-
+//Have template class to implement strategy (extend template class)
 public class BFSTemplate implements GraphStrategyPattern {
     private final Graph<String, DefaultEdge> graph;
 
